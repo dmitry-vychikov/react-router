@@ -533,7 +533,7 @@ export function useNavigate(): NavigateFunction {
       );
 
       if (!activeRef.current) return;
-
+      console.log("TESTING:Navigate invoked")
       if (typeof to === "number") {
         navigator.go(to);
         return;
