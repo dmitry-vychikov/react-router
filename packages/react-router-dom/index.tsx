@@ -24,7 +24,8 @@ import {
   useParams,
   useResolvedPath,
   useRoutes,
-  useOutletContext
+  useOutletContext,
+  patchNavigate
 } from "react-router";
 import type { To } from "react-router";
 
@@ -73,7 +74,8 @@ export {
   useParams,
   useResolvedPath,
   useRoutes,
-  useOutletContext
+  useOutletContext,
+  patchNavigate
 };
 
 export type {

@@ -497,6 +497,11 @@ export interface NavigateOptions {
   state?: any;
 }
 
+let decoratedNavigate: (() => NavigateFunction) | null = null
+
+export function patchNavigate(decorator: (original: () => NavigateFunction) => () => NavigateFunction): void {
+  decoratedNavigate = decorator(useNavigateInternal)
+}
 /**
  * Returns an imperative method for changing the location. Used by <Link>s, but
  * may also be used by other elements to change the location.
@@ -504,6 +509,15 @@ export interface NavigateOptions {
  * @see https://reactrouter.com/docs/en/v6/api#usenavigate
  */
 export function useNavigate(): NavigateFunction {
+  if (decoratedNavigate) {
+    return decoratedNavigate()
+  }
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  return useNavigateInternal()
+}
+
+function useNavigateInternal(): NavigateFunction {
   invariant(
     useInRouterContext(),
     // TODO: This error is probably because they somehow have 2 versions of the
